@@ -6,11 +6,18 @@ public class Music : MonoBehaviour
     {
         // Check for duplicates
         Music[] others = Object.FindObjectsOfType<Music>();
-        if (others.Length > 1) {
-            Destroy(gameObject);
-            return;
+        foreach (Music other in others) {
+            if (other == this) continue;
+
+            Music target = clipof(other) == clipof(this) ? this : other;
+            Destroy(target.gameObject);
         }
 
         Object.DontDestroyOnLoad(gameObject);
+    }
+
+    private static AudioClip clipof(Music music)
+    {
+        return music.gameObject.GetComponent<AudioSource>().clip;
     }
 }
