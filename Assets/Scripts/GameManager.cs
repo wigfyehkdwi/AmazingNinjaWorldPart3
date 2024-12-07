@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Vector3 checkPoint = new Vector3(-4.7f, 0.6f, 0);
     public GameObject retryButton;
     public TextMeshProUGUI buttonText;
+    public TextMeshProUGUI loadingText;
 
     private AudioSource buttonSound;
     public AudioClip ButtonClick;
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         textMessage.text = "Keep Trying!";
-        retryButton.GetComponent<Button>().onClick.AddListener(delegate { retryButton.GetComponent<Button>().interactable = false; Reset("Level1"); });
+        retryButton.GetComponent<Button>().onClick.AddListener(delegate { retryButton.GetComponent<Button>().interactable = false; loadingText?.gameObject.SetActive(true); Reset("Level1"); });
         buttonText.text = "Click to try again";
         popUp.SetActive(true);
         PlayerPrefs.DeleteKey("LIVES_LEFT");
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
     public void TeleportOpen(string nextScene)
     {
         textMessage.text = "Good Job!";
-        retryButton.GetComponent<Button>().onClick.AddListener(delegate { retryButton.GetComponent<Button>().interactable = false; Reset(nextScene); });
+        retryButton.GetComponent<Button>().onClick.AddListener(delegate { retryButton.GetComponent<Button>().interactable = false; loadingText?.gameObject.SetActive(true); Reset(nextScene); });
         buttonText.text = "Click to continue";
         popUp.SetActive(true);
         buttonSound.PlayOneShot(Win);
